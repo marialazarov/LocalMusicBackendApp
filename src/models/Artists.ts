@@ -4,7 +4,8 @@ import { Events } from "./Events";
 
 
 @Entity("artists")
-export class Artists {
+export class Artists extends
+BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
@@ -30,8 +31,8 @@ export class Artists {
     @JoinColumn({name: "user_id"})
     user!: User;
 
-    @OneToMany(() => Event, (event) => event)
-    Events!: Events[];
+    @OneToMany(() => Events, (event) => event)
+    event!: Events[];
 
 
 }
