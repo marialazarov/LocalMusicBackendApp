@@ -17,6 +17,8 @@ BaseEntity {
 
     @Column()
     music?: string;
+    @Column()
+    events?: string;
 
    
 
@@ -30,8 +32,7 @@ BaseEntity {
     @JoinColumn({name: "user_id"})
     user!: User;
 
-    @OneToMany(() => Events, (event) => event.artists)
-    events!: Events[];
+    
 
 
 }

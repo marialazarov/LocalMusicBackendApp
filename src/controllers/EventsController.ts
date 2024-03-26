@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Events } from "../models/Events";
-import { CreateEventAttendance1711452768525 } from "../migrations/1711452768525-CreateEventAttendance";
+import { CreateEventAttendance1711452768525 } from "../database/migrations/1711452768525-CreateEventAttendance";
 
 import { Controller } from "./Controller";
 import { CreateEvent_AttendanceRequestBody, CreateEventsRequestBody } from "../types/types";

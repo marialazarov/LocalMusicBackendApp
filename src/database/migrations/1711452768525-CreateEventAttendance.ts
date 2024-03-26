@@ -17,13 +17,13 @@ export class CreateEventAttendance1711452768525 implements MigrationInterface {
                 name: "event_id",
                 type: "int",
                 isPrimary: true,
-                isNullable: true
+               
              },
              {
                 name: "user_id",
                 type: "int",
                 isPrimary: true,
-                isNullable: true
+         
              },
            
              {
