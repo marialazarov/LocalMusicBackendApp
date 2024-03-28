@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { BaseFactory } from "./BaseFactory";
 import { Artists } from "../../models/Artists";
-import { Events } from "../../models/Events";
+
 
 // -----------------------------------------------------------------------------
 

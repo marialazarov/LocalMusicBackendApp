@@ -47,5 +47,6 @@ export class User {
     @OneToMany(() => Event_Attendance, (event_attendance) => event_attendance
     .user_id)
    event_attendance?: Event_Attendance[];
+   
 
 }

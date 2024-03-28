@@ -14,7 +14,7 @@ export class Events {
     location!: string;
 
     @Column()
-    date!: string;
+    date!: Date;
 
     @Column()
     created_at?: Date

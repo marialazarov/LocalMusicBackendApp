@@ -134,8 +134,8 @@ export class AppointmentController implements Controller {
       try {
          const id = +req.params.id;
 
-         const appointmentRepository = AppDataSource.getRepository(Event_Attendance);
-         await appointmentRepository.delete(id);
+         const event_attendanceRepository = AppDataSource.getRepository(Event_Attendance);
+         await event_attendanceRepository.delete(id);
 
          res.status(200).json({
             message: "Event attendance deleted successfully",
