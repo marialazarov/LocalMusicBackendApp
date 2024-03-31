@@ -43,4 +43,3 @@ export class CreateRoles1711370540646 implements MigrationInterface {
 
 }
 
-

@@ -79,3 +79,4 @@ export class CreateArtists1711452215378 implements MigrationInterface {
     }
 
 }
+

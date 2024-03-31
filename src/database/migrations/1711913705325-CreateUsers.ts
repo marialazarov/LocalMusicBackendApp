@@ -62,3 +62,4 @@ export class CreateUsers1711452057287 implements MigrationInterface {
 
 
 }
+
