@@ -14,17 +14,31 @@ import bcrypt from "bcrypt";
 export class ArtistController implements Controller {
    async getAll(req: Request, res: Response): Promise<void | Response<any>> {
       try {
-         const artistRepository = AppDataSource.getRepository(Artists);
-         
-         const allArtists = await artistRepository.find();
-         res.status(200).json(allArtists);
-      } catch (error) {
-         res.status(500).json({
-            message: "Error while getting users",
-         });
-      }
-   }
+          const artistRepository = AppDataSource.getRepository(Artists);
+  
+          const allArtists = await artistRepository.find({
+              relations: ['user'],
+          });
+  
+          const userArtistIds = allArtists.map(artist => {
+              return {
+                  id: artist.id,
+                  name: artist.user.name,
+                  username: artist.user.username,
+                  surname: artist.user.surname,
+                  email: artist.user.email,
 
+              };
+          });
+  
+          res.status(200).json({ userArtistIds });
+  
+      } catch (error) {
+          res.status(500).json({
+              message: "Error while getting artist",
+          });
+      }
+  }
    async getById(req: Request, res: Response): Promise<void | Response<any>> {
       try {
          const id = +req.params.id;

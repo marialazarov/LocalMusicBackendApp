@@ -1,7 +1,8 @@
 import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
 import { Role } from "./Roles";
 import { Artists } from "./Artists";
-import { Event_Attendance } from "./Event_Attendance";
+
+import { Events } from "./Events";
 
 
 
@@ -44,9 +45,8 @@ export class User {
     @OneToOne(() => Artists, (artists) => artists.user)
     artists?: Artists;
 
-    @OneToMany(() => Event_Attendance, (event_attendance) => event_attendance
-    .user_id)
-   event_attendance?: Event_Attendance[];
+    @OneToMany(() => Events, events => events.user_id)
+    events?: Events[];
    
 
 }

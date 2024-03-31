@@ -19,18 +19,28 @@ export class CreateArtists1711452215378 implements MigrationInterface {
                     type: "int",     
                     isPrimary: true,              
                  },
+                 {
+                  name: "username",
+                  type: "varchar",
+                  length: "1000",                        
+               },
+               {
+                  name: "email",
+                  type: "varchar",
+                  length: "1000",                        
+               },
+               {
+                  name: "password",
+                  type: "varchar",
+                  length: "1000",                        
+               },
                   {
                     name: "genre",
                     type: "varchar",
                     length: "1000",                        
                  },
 
-                 {
-                    name: "events",
-                    type: "varchar",
-                    length: "1000",                        
-                 },
-
+             
                  {
                     name: "music",
                     type: "varchar",
@@ -57,6 +67,7 @@ export class CreateArtists1711452215378 implements MigrationInterface {
                 referencedColumnNames: ["id"],
                 onDelete: "CASCADE", // when user is deleted, artist related to this
                },
+           
             ],
             }),
             true

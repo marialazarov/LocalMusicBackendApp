@@ -1,11 +1,16 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm"
 import { Artists } from "./Artists";
+import { User } from "./Users";
 
 
 @Entity("events")
 export class Events {
     @PrimaryGeneratedColumn()
     id?: number;
+
+ 
+    @Column()
+    user_id!: number;
 
     @Column()
     artist_id!: number;
@@ -22,9 +27,16 @@ export class Events {
     @Column()
     updated_at?: Date
 
-    @ManyToOne(() => Artists, (artists) => artists.user)
-    @JoinColumn ({name: "artist_id"})
-    artists?: Artists;
+
+    @ManyToOne(() => User, (user) => user.roles)
+    @JoinColumn ({name: "user_id", referencedColumnName:"id"})
+    user?: User;
+
+    @ManyToOne(() => Artists, (artist) => artist.user)
+    @JoinColumn ({name: "artist_id", referencedColumnName:"id"})
+    artist?: Artists;
+
+   
 
 
 }

@@ -1,38 +1,41 @@
 import { Request, Response } from "express";
 import { Events } from "../models/Events";
-import { CreateEventAttendance1711452768525 } from "../database/migrations/1711452768525-CreateEventAttendance";
 
 import { Controller } from "./Controller";
-import { CreateEvent_AttendanceRequestBody, CreateEventsRequestBody } from "../types/types";
+import {  CreateEventsRequestBody } from "../types/types";
 import { AppDataSource } from "../data-source";
-import { Event_Attendance } from "../models/Event_Attendance";
+
 
 
 //----------------------------------------------------------------------
 
-export class AppointmentController implements Controller {
+export class EventController implements Controller {
    async getAll(req: Request, res: Response): Promise<void | Response<any>> {
       try {
-         const event_attendanceRespository = AppDataSource.getRepository(Event_Attendance);
+         const eventsRepository = AppDataSource.getRepository(Events);
 
          let { page, skip } = req.query;
 
          let currentPage = page ? +page : 1;
          let itemsPerPage = skip ? +skip : 10;
 
-         const [allevents_attendance, count] = await event_attendanceRespository.findAndCount({
+         const [allEvents, count] = await eventsRepository.findAndCount({
             skip: (currentPage - 1) * itemsPerPage,
             take: itemsPerPage,
             select: {
                id: true,
                user_id: true,
+               artist_id: true,
+               date: true,
+               location: true,
             },
          });
          res.status(200).json({
             count,
             skip: itemsPerPage,
             page: currentPage,
-            results: allevents_attendance,
+            results: allEvents
+            ,
          });
       } catch (error) {
          res.status(500).json({
@@ -42,74 +45,101 @@ export class AppointmentController implements Controller {
    }
    async getById(req: Request, res: Response): Promise<void | Response<any>> {
       try {
-          const id = +req.params.id; // Obtén el ID del usuario de la URL
-          const event_attendanceRespository = AppDataSource.getRepository(Event_Attendance
-            
-            );
-          const appointments = await event_attendanceRespository.findBy({
-              user_id: id, // Utiliza el ID del usuario para buscar sus appointments
-          });
-  
-          if (!appointments) {
-              return res.status(404).json({
-                  message: "Event not found",
-              });
-          }
-  
-          res.status(200).json(appointments);
-      } catch (error) {
-          res.status(500).json({
-              message: "Error while getting your event attendance",
-          });
-      }
-  }
-   async getByArtistId(req: Request, res: Response): Promise<void | Response<any>> {
-      try {
+
          const id = +req.params.id;
-         const event_attendanceRespository = AppDataSource.getRepository(Event_Attendance);
-         const event_attendance = await event_attendanceRespository.findBy({
-            user_id: id,
+         const eventsRepository = AppDataSource.getRepository(Events);
+         const events
+          = await eventsRepository.findOneBy({
+            id: id,
          });
 
-         if (!event_attendance) {
+         if (!events
+            ) {
             return res.status(404).json({
-               message: "Attendance not found",
+               message: "Event not found",
             });
          }
 
-         res.status(200).json(event_attendance);
+         res.status(200).json(events
+            );
       } catch (error) {
          res.status(500).json({
             message: "Error while getting events",
          });
       }
    }
+   async getByArtistId(req: Request, res: Response): Promise<void | Response<any>> {
+      try {
+         const id = +req.params.id;
+         const eventsRepository = AppDataSource.getRepository(Events);
+         const events = await eventsRepository
+         .findBy({
+            artist_id: id,
+         });
 
+         if (!events) {
+            return res.status(404).json({
+               message: "Event not found",
+            });
+         }
+
+         res.status(200).json(events);
+      } catch (error) {
+         res.status(500).json({
+            message: "Error while getting events",
+         });
+      }
+   }
+   async getByUserId(req: Request, res: Response): Promise<void | Response<any>> {
+      try {
+         const id = +req.params.id;
+         const eventsRepository = AppDataSource.getRepository(Events);
+         const events = await eventsRepository.findBy({
+            user_id: id,
+         });
+
+         if (!events) {
+            return res.status(404).json({
+               message: "Event not found",
+            });
+         }
+
+         res.status(200).json(events);
+      } catch (error) {
+         res.status(500).json({
+            message: "Error while getting appointments",
+         });
+      }
+   }
 
    async create(
-      req: Request<{}, {}, CreateEvent_AttendanceRequestBody>,
+      req: Request<{}, {}, CreateEventsRequestBody>,
 
       res: Response
    ): Promise<void | Response<any>> {
-      const { user_id , event_id} = req.body;
+      const { user_id , artist_id, date, location} = req.body;
 
-      const event_attendanceRepository= AppDataSource.getRepository(Event_Attendance);
+      const eventsRepository= AppDataSource.getRepository(Events);
       try {
-         const newEventAttendance: Event_Attendance = {
+         const newEvent: Events
+          = {
             user_id,
-            event_id
+            artist_id,
+            date,
+            location
             
          }
-          await event_attendanceRepository.save(newEventAttendance);
+          await eventsRepository.save(newEvent
+            );
          res.status(201).json({
-            message: "Event Attendance created succesfully!",
-            event_attendance: newEventAttendance
+            message: "Event  created succesfully!",
+            event: newEvent
             ,
          });
       } catch (error: any) {
-         console.error("Error while creating Event Attendance:", error);
+         console.error("Error while creating Event:", error);
          res.status(500).json({
-            message: "Error while creating Event Attendance",
+            message: "Error while creating Event",
             error: error.message,
          });
       }
@@ -119,14 +149,14 @@ export class AppointmentController implements Controller {
          const id = +req.params.id;
          const data = req.body;
 
-         const event_attendanceRepository = AppDataSource.getRepository(Event_Attendance);
-         const event_attendanceUpdated = await event_attendanceRepository.update({ id: id }, data);
+         const eventsRepository = AppDataSource.getRepository(Events);
+         const eventtUpdated = await eventsRepository.update({ id: id }, data);
          res.status(202).json({
-            message: "Event attendance updated successfully!",
+            message: "Event updated successfully",
          });
       } catch (error) {
          res.status(500).json({
-            message: "Error while updating event_attendance",
+            message: "Error while updating event",
          });
       }
    }
@@ -134,15 +164,15 @@ export class AppointmentController implements Controller {
       try {
          const id = +req.params.id;
 
-         const event_attendanceRepository = AppDataSource.getRepository(Event_Attendance);
-         await event_attendanceRepository.delete(id);
+         const eventsRepository = AppDataSource.getRepository(Events);
+         await eventsRepository.delete(id);
 
          res.status(200).json({
-            message: "Event attendance deleted successfully",
+            message: "Event deleted successfully",
          });
       } catch (error) {
          res.status(500).json({
-            message: "Error while deleting event attendance",
+            message: "Error while deleting event",
          });
       }
    }

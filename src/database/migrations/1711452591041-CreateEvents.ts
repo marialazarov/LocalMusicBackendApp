@@ -14,11 +14,16 @@ export class CreateEvents1711452591041 implements MigrationInterface {
                  isGenerated: true,
                  generationStrategy: "increment",
               },
-           
+              {
+               name: "user_id",
+               type: "int",
+               isNullable: true
+             },
              {
                 name: "artist_id",
                 type: "int",
-                isPrimary: true,
+               // isPrimary: true,
+               isNullable: true
                 
              },
               {
@@ -55,6 +60,10 @@ export class CreateEvents1711452591041 implements MigrationInterface {
             referencedColumnNames: ["id"],
             onDelete: "CASCADE",
            },
+           {   columnNames: ["user_id"],
+           referencedTableName: "users",
+           referencedColumnNames: ["id"],
+           onDelete: "CASCADE",}
         ],
         }),
         true
