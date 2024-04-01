@@ -24,6 +24,9 @@ export class ArtistController implements Controller {
               return {
                   id: artist.id,
                   name: artist.user.name,
+                  genre: artist.genre,
+                  music: artist.music,
+                  events: artist.events,
                   username: artist.user.username,
                   surname: artist.user.surname,
                   email: artist.user.email,

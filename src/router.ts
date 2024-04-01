@@ -13,7 +13,7 @@ const router = express.Router();
 router.use("/api/users", userRoutes);
 router.use("/auth", authRoutes);
 router.use("/api/artist", artistRoutes);
-router.use("/api/appointment", eventRoutes);
+router.use("/api/events", eventRoutes);
 
 
 export default router;
