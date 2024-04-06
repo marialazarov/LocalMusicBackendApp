@@ -9,13 +9,13 @@ export const roleSeeder = async () => {
       const roleRepository = AppDataSource.getRepository(Role);
 
       const userRole = new Role()
-      userRole.role_name = "user";
+      userRole.name = "client";
 
       const adminRole = new Role()
-      adminRole.role_name = "admin";
+      adminRole.name = "admin";
 
       const superadminRole = new Role()
-      superadminRole.role_name = "super_admin";
+      superadminRole.name = "super_admin";
 
       await roleRepository.save([userRole, adminRole, superadminRole]);
 

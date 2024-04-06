@@ -9,7 +9,7 @@ import { isAdmin } from "../middlewares/isAdmin";
 const router = express.Router();
 const userController = new UserController();
 
-router.get("/",   userController.getAllUsersFor);
+router.get("/",   userController.getAll);
 router.get("/:id", auth,  userController.getById); 
 router.post("/", userController.create);
 router.patch("/:id", auth, isAdmin, userController.update);

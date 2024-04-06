@@ -75,4 +75,3 @@ public async down(queryRunner: QueryRunner): Promise<void> {
 }
 
 }
-

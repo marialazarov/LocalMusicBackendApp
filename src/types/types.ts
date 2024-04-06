@@ -1,10 +1,13 @@
 
 export interface TokenData {
-    userId: string,
-    userRoles: string[],
-    email: string,
-  
+  userId: string,
+  userRoles: string[],
+  name: string,
+  username:string,
+  email: string,
+  phone?: string
 }
+
 
 export interface CreateEventsRequestBody {
     artist_id: number,
@@ -22,11 +25,11 @@ export interface CreateEventsRequestBody {
 
   export interface CreateUserRequestBody{
     username: string;
-    name?: string;
+    name: string;
     surname?: string;
     password: string;
     email:string;
-
+ 
 }
 
 export interface CreateArtistRequestBody {

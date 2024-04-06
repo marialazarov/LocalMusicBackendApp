@@ -15,7 +15,7 @@ export class User {
     username!: string;
 
     @Column()
-    name?: string;
+    name!: string;
     
 
     @Column()

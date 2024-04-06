@@ -21,14 +21,15 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
     //Modificar  el objeto Request con los datos del payload
    
     const decodedPayload: TokenData = {
-        userId: decoded.userId,
-        userRoles: decoded.userRoles,
-    
-      email: decoded.email,
+      userId: decoded.userId,
+      userRoles: decoded.userRoles,
+     name: decoded.name,
+    username:decoded.username,
+    email: decoded.email,
+   
+  
       
-      
-        
-     };
+   };
 
      req.tokenData = decodedPayload;
 

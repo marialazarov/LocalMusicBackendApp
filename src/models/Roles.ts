@@ -7,7 +7,7 @@ export class Role {
     id!: number;
 
     @Column()
-    role_name!: string
+    name!: string
 
     @Column()
     created_at!: Date

@@ -18,15 +18,15 @@ export class CreateUsers1711452057287 implements MigrationInterface {
                   {
                      name: "name",
                      type: "varchar",
-                     length: "255",
-                     isNullable: true,
+                     length: "40",
+         
     
                   },
                   {
                      name: "surname",
                      type: "varchar",
                      length: "255",
-                     isNullable: true,
+                  
     
                   },
               

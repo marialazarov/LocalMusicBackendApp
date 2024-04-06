@@ -20,7 +20,7 @@ export const userSeeder = async () => {
 
       // / Llamar a la función para sembrar usuarios con roles de user
       await seedUsersWithRoles({
-         roles: [UserRoles.USER],
+         roles: [UserRoles.CLIENT],
          count: count,
       });
 

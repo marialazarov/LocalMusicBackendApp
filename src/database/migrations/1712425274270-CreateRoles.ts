@@ -13,13 +13,7 @@ export class CreateRoles1711370540646 implements MigrationInterface {
                         isGenerated: true,
                         generationStrategy: "increment",
                     },
-                    {
-                        name: "role_name",
-                        type: "enum",
-                        enum: ["user", "admin", "super_admin"],
-                        default: '"user"'
-                    },
-                   
+                    { name: "name", type: "varchar", length: "40", isUnique: true },
                     {
                         name: "created_at",
                         type: "timestamp",
