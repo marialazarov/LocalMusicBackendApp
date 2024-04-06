@@ -65,19 +65,19 @@ export class AuthController {
       //Encontrar un usuario por su email
 
       const user = await userRepository.findOne({
-        where: {
-          email: email,
-        },
-
-        //Para que salga el rol del usuario tambien
-        relations: {
-          roles: true,
-        },
-        select: {
-          roles: {
-            name: true,
-          },
-        },
+         where: {
+            email: email,
+         },
+         relations: {
+            roles: true,
+         },
+         select: {
+            password: true,
+            id: true,
+            roles: {
+               name: true,
+            },
+         },
       });
 
       //Verificar usuario inexistente
@@ -99,11 +99,12 @@ export class AuthController {
       const roles = user.roles.map((role) => role.name)
 
       const tokenPayLoad: TokenData = {
+         email:user.email,
       userId: user.id?.toString() as string,
        userRoles: roles,
        username: user.username,
        name:user.name,
-       email:user.email,
+    
     
 
 
