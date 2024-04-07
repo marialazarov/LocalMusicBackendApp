@@ -14,7 +14,7 @@ router.get("/:id", eventcontroller.getById);
 router.post("/", eventcontroller.create);
 router.patch("/:id", eventcontroller.update);
 router.delete("/:id", eventcontroller.delete);
-router.get("/miseventos/:id", auth, isAdmin, eventcontroller.getByArtistId);
+router.get("/miseventos/:id", eventcontroller.getByUserId);
 
 
 export default router;
