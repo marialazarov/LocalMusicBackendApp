@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { CreateUserRequestBody, TokenData } from "../types/types";
-import { User } from "../models/Users";
+import { User } from "../models/User";
 import bcrypt from "bcrypt";
 import { UserRoles } from "../constants/UserRoles";
 import { AppDataSource } from "../data-source";
@@ -72,7 +72,10 @@ export class AuthController {
             roles: true,
          },
          select: {
+            username: true,
             password: true,
+            email: true,
+            name: true,
             id: true,
             roles: {
                name: true,
@@ -113,7 +116,7 @@ export class AuthController {
        const token = jwt.sign(tokenPayLoad, '123', {
         expiresIn: '3h',
        });
-
+        console.log(token)
 
       res.status(StatusCodes.OK).json({
         message: "Login succesfully!",

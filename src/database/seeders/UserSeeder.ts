@@ -1,9 +1,9 @@
 
-import { AppDataSource } from "../../data-source";
-import { User } from "../../models/Users";
+import { User } from "../../models/User";
 import { UserFactory } from "../factories/UserFactory";
 import { Role } from "../../models/Roles";
 import { UserRoles } from "../../constants/UserRoles";
+import { AppDataSource } from "../../data-source";
 
 // -----------------------------------------------------------------------------
 

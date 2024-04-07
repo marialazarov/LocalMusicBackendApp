@@ -24,8 +24,8 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
       userId: decoded.userId,
       userRoles: decoded.userRoles,
      name: decoded.name,
-    username:decoded.username,
-    email: decoded.email,
+      username:decoded.username,
+      email: decoded.email,
    
   
       

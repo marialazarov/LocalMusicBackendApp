@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from "typeorm";
-import { User } from "./Users";
+import { User } from "./User";
 import { Events } from "./Events";
 
 @Entity("artists")
@@ -32,7 +32,7 @@ export class Artists extends BaseEntity {
     @Column()
     updated_at!: Date;
 
-    @OneToOne(() => User, (user) => user.artists)
+    @OneToOne(() => User, (users) => users.artists)
     @JoinColumn({ name: "user_id" })
     user!: User;
    

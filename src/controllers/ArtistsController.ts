@@ -1,6 +1,6 @@
 import { Controller } from "./Controller";
 import { Request, Response } from "express";
-import { User } from "../models/Users";
+import { User } from "../models/User";
 import { AppDataSource } from "../data-source";
 import { Artists
  } from "../models/Artists";
