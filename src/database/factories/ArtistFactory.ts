@@ -9,6 +9,8 @@ export class ArtistFactory extends BaseFactory<Artists> {
     protected generateSpecifics(artists: Artists): Artists{
         artists.music = faker.music.songName();
         artists.username = faker.internet.userName();
+        artists.name = faker.person.fullName();
+        artists.surname = faker.person.lastName();
         artists.email = faker.internet.email();
         artists.password = bcrypt.hashSync("12345678",10)
         artists.genre = faker.music.genre();

@@ -24,6 +24,17 @@ export class CreateArtists1711452215378 implements MigrationInterface {
                   type: "varchar",
                   length: "1000",                        
                },
+
+               {
+                name: "name",
+                type: "varchar",
+                length: "1000",                        
+             },
+             {
+                name: "surname",
+                type: "varchar",
+                length: "1000",                        
+             },
                {
                   name: "email",
                   type: "varchar",

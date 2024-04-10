@@ -6,6 +6,7 @@ import { Artists
  } from "../models/Artists";
 import { UserRoles } from "../constants/UserRoles";
 import {
+   CreateArtistRequestBody,
    CreateUserRequestBody,} from "../types/types";
 import bcrypt from "bcrypt";
 
@@ -67,48 +68,62 @@ export class ArtistController implements Controller {
 
 
    async create(
-      req: Request<{}, {},CreateUserRequestBody>,
+      req: Request<{}, {}, CreateArtistRequestBody>,
       res: Response
     ): Promise<void | Response<any>> {
-      const { username, name, surname, password, email } = req.body;
-    
+      const { username,name, surname,  password, email } = req.body;
+      const {music, genre} = req.body
       const userRepository = AppDataSource.getRepository(User);
-      
+      const artistRepository = AppDataSource.getRepository(Artists)
     
       try {
         // Crear nuevo usuario
-        const newUser: User = {
+        const newUser = userRepository.create({
           username,
           name,
           surname,
           email,
           password: bcrypt.hashSync(password, 10),
           roles: [UserRoles.ADMIN],
-        };
+        });
         await userRepository.save(newUser);
      //Crear nuevo artista asociado al usuario
         
-     if (newUser.roles.includes(UserRoles.ADMIN)) { 
+     //if (newUser.roles.includes(UserRoles.ADMIN)) { 
         // Si es un artista, también crea una entrada en la tabla de artistas. 
-        const artistRepository = AppDataSource.getRepository(Artists); 
-        const newArtist = artistRepository.create({ 
-          user_id: newUser.id, // Asocia el nuevo artista con el usuario recién creado. 
-        }); 
+        //const artistRepository = AppDataSource.getRepository(Artists); 
+       // const newArtist = artistRepository.create({ 
+        //  user_id: newUser.id, // Asocia el nuevo artista con el usuario recién creado. 
+       // }); 
    
-        await artistRepository.save(newArtist); 
-      } 
+       // await artistRepository.save(newArtist); 
+     // } 
    
-      res.status(201).json("Artist succesfully created!"); 
-    } catch (error: any) { 
-      console.error("Error while creating artist:", error); 
-      res.status(500).json({ 
-        message: "Error while creating artis", 
-        error: error.message, 
-      }); 
-    } 
-  }
- 
-    
+     // res.status(201).json("Artist succesfully created!"); 
+   // } catch (error: any) { 
+     // console.error("Error while creating artist:", error); 
+     // res.status(500).json({ 
+     //   message: "Error while creating artis", 
+      //  error: error.message, 
+     // }); 
+    //} 
+ // }
+  const newArtist = artistRepository.create({
+   user:newUser,
+   music,
+   genre
+});
+ await artistRepository.save(newArtist);
+ res.status(201).json(newArtist);
+} catch (error: any) {
+  console.error("Error while creating agent:", error);
+  res.status(500).json({
+    message: "Error while creating agent",
+    error: error.message,
+  });
+}
+}
+
 
    async update(req: Request, res: Response): Promise<void | Response<any>> {
       try {

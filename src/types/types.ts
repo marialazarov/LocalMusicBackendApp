@@ -8,6 +8,15 @@ export interface TokenData {
   phone?: string
 }
 
+export interface TokenDataArtist {
+  userId: string,
+  userRoles: string[],
+  name: string,
+  username:string,
+  email: string,
+  
+}
+
 
 export interface CreateEventsRequestBody {
     artist_id: number,
@@ -35,6 +44,8 @@ export interface CreateEventsRequestBody {
 export interface CreateArtistRequestBody {
     user_id: number;
     username: string;
+    name:string;
+    surname: string;
     email: string;
     password: string;
     music: string;

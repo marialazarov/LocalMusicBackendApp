@@ -49,79 +49,119 @@ export class AuthController {
     }
   }
 
-  //Login usuarios
   async login(req: Request, res: Response): Promise<void | Response<any>> {
     const { password, email } = req.body;
 
     const userRepository = AppDataSource.getRepository(User);
+    const artistRepository = AppDataSource.getRepository(Artists);
 
     try {
-      //Validar existencia de  email y contraseña
+      // Validar existencia de email y contraseña
       if (!email || !password) {
         return res.status(StatusCodes.BAD_REQUEST).json({
           message: "Email or password is required",
         });
       }
-      //Encontrar un usuario por su email
 
+      // Encontrar un usuario por su email
       const user = await userRepository.findOne({
-         where: {
-            email: email,
-         },
-         relations: {
-            roles: true,
-         },
-         select: {
-            username: true,
-            password: true,
-            email: true,
+        where: {
+          email: email,
+        },
+        relations: {
+          roles: true,
+        },
+        select: {
+          username: true,
+          password: true,
+          email: true,
+          name: true,
+          id: true,
+          roles: {
             name: true,
-            id: true,
-            roles: {
-               name: true,
-            },
-         },
+          },
+        },
       });
 
-      //Verificar usuario inexistente
-      if (!user) {
+      // Encontrar un artista por su email
+      const artist = await artistRepository.findOne({
+        where: {
+          email: email,
+        },
+        select: {
+          username: true,
+          password: true,
+          email: true,
+          music: true,
+          id: true,
+          genre: true,
+          events: true,
+        },
+      });
+
+      // Verificar si ni el usuario ni el artista existen
+      if (!user && !artist) {
         return res.status(StatusCodes.BAD_REQUEST).json({
           message: "Email or password doesn't exist",
         });
       }
 
-      //Verificar contraseña si el usuario existe
-      const isPasswordValid = bcrypt.compareSync(password, user.password);
-      if (!isPasswordValid) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-          message: "Email or password doesn't exist",
+      // Verificar contraseña si el usuario existe
+      if (user) {
+        const isPasswordValid = bcrypt.compareSync(password, user.password);
+        if (!isPasswordValid) {
+          return res.status(StatusCodes.BAD_REQUEST).json({
+            message: "Email or password doesn't exist",
+          });
+        }
+
+        // Generar token para usuario
+        const roles = user.roles.map((role) => role.name)
+        const tokenPayLoad: TokenData = {
+          email: user.email,
+          userId: user.id?.toString() as string,
+          userRoles: roles,
+          username: user.username,
+          name: user.name,
+        };
+        const token = jwt.sign(tokenPayLoad, '123', {
+          expiresIn: '3h',
         });
-      }
-
-      //Generar token
-      const roles = user.roles.map((role) => role.name)
-
-      const tokenPayLoad: TokenData = {
-         email:user.email,
-      userId: user.id?.toString() as string,
-       userRoles: roles,
-       username: user.username,
-       name:user.name,
-    
-    
-
-
-       };
-
-       const token = jwt.sign(tokenPayLoad, '123', {
-        expiresIn: '3h',
-       });
         console.log(token)
 
-      res.status(StatusCodes.OK).json({
-        message: "Login succesfully!",
-        token, 
-      });
+        return res.status(StatusCodes.OK).json({
+          message: "Login successfully!",
+          token,
+        });
+      }
+
+      // Verificar contraseña si el artista existe
+      if (artist) {
+        const isPasswordValid = bcrypt.compareSync(password, artist.password);
+        if (!isPasswordValid) {
+          return res.status(StatusCodes.BAD_REQUEST).json({
+            message: "Email or password doesn't exist",
+          });
+        }
+
+        // Generar token para artista
+        const tokenPayLoad: TokenData = {
+          email: artist.email,
+          userId: artist.id?.toString() as string,
+          userRoles: ['admin'], // Asignar el rol de ARTIST al artista
+          username: artist.username,
+          name: `${artist.name} ${artist.surname}`, // Suponiendo que tienes un campo 'surname' en tu modelo de Artista
+        };
+        const token = jwt.sign(tokenPayLoad, '123', {
+          expiresIn: '3h',
+        });
+        console.log(token)
+
+        return res.status(StatusCodes.OK).json({
+          message: "Login successfully!",
+          token,
+        });
+      }
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: "Error while login",

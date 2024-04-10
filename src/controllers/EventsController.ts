@@ -50,7 +50,7 @@ export class EventController implements Controller {
          const eventsRepository = AppDataSource.getRepository(Events);
          const events
           = await eventsRepository.findOneBy({
-            id: id,
+            user_id: id,
          });
 
          if (!events

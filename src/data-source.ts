@@ -9,13 +9,11 @@ import { Artists } from "./models/Artists";
 import { Events
    
  } from "./models/Events";
-import { CreateRoles1711370540646 } from "./database/migrations/1712516588113-CreateRoles";
-import { CreateUsers1711452057287 } from "./database/migrations/1712516657912-CreateUsers";
-import { UserRoles } from "./constants/UserRoles";
-import { CreateUserRoles1711370714119 } from "./database/migrations/1712516757100-CreateUserRoles";
-import { CreateArtists1711452215378 } from "./database/migrations/1712516816918-CreateArtists";
-import { CreateEvents1711452591041 } from "./database/migrations/1712516864300-CreateEvents";
-
+import { CreateRoles1711370540646 } from "./database/migrations/1712743403827-CreateRoles";
+import { CreateUsers1711452057287 } from "./database/migrations/1712748653125-CreateUsers";
+import { CreateEvents1711452591041 } from "./database/migrations/1712748841625-CreateEvents";
+import { CreateArtists1711452215378 } from "./database/migrations/1712748779041-CreateArtists";
+import { CreateUserRoles1711370714119 } from "./database/migrations/1712748903145-CreateUserRoles";
 
 // -----------------------------------------------------------------------------
 
@@ -29,8 +27,7 @@ export const AppDataSource = new DataSource({
    
    entities: [Role,User,Events,Artists],
    
-   migrations: [CreateRoles1711370540646, CreateUsers1711452057287,CreateUserRoles1711370714119,CreateArtists1711452215378,CreateEvents1711452591041
-   ],
+   migrations: [CreateRoles1711370540646,CreateUsers1711452057287,CreateArtists1711452215378,CreateEvents1711452591041,CreateUserRoles1711370714119],
    synchronize:false,
    logging: false,
 });
