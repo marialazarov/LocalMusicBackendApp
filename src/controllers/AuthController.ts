@@ -90,6 +90,8 @@ export class AuthController {
         },
         select: {
           username: true,
+          name:true,
+          surname:true,
           password: true,
           email: true,
           music: true,

@@ -68,6 +68,13 @@ export class EventController implements Controller {
          });
       }
    }
+
+  
+  
+
+
+
+
    async getByArtistId(req: Request, res: Response): Promise<void | Response<any>> {
       try {
          const id = +req.params.id;
@@ -126,8 +133,8 @@ export class EventController implements Controller {
             user_id,
             artist_id,
             date,
-            location
-            
+            location,
+                
          }
           await eventsRepository.save(newEvent
             );
@@ -176,4 +183,6 @@ export class EventController implements Controller {
          });
       }
    }
+
+
 }

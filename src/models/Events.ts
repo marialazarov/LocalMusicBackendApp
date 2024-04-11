@@ -10,7 +10,7 @@ export class Events {
 
  
     @Column()
-    user_id!: number;
+    user_id?: number;
 
     @Column()
     artist_id!: number;
